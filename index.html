@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Gaming Hub - Play Top 6 Games</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #1a252f;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            color: white;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .games-section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .game-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .game-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1rem;
+            background: var(--light);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--secondary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .game-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .game-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-section, .privacy-section {
+            padding: 4rem 0;
+            background: white;
+        }
+        
+        .about-content, .privacy-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .about-content h2, .privacy-content h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links li {
+            margin: 0 1rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        /* Game Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            overflow: auto;
+        }
+        
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 800px;
+            position: relative;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 2rem;
+            color: var(--dark);
+            cursor: pointer;
+        }
+        
+        .game-container {
+            width: 100%;
+            height: 500px;
+            background: #f5f5f5;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">ProGameHub</a>
+                <ul class="nav-links">
+                    <li><a href="#games">Games</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="hero-content container">
+            <h1>Play The Best Online Games</h1>
+            <p>Experience thrilling gameplay with our collection of handpicked games. Free to play, no downloads required!</p>
+            <a href="#games" class="btn">Explore Games</a>
+        </div>
+    </section>
+    
+    <section id="games" class="games-section">
+        <div class="container">
+            <h2 class="section-title">Our Game Collection</h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <div class="game-icon">
+                    <img src="" style="width: 60px; height: 60px;" /></div>
+                    <h3>Space Invader</h3>
+                    <p>Classic arcade shooter game. Defend Earth from alien invaders!</p>
+                   <a href="https://hakwo65.github.io/Today-News" class="btn" target="_blank">Play Now</a>
+                </div>
+                
+                <div class="game-card">
+                    <div class="game-icon">
+  		    <img src="" style="width: 60px; height: 60px;" /></div>
+                    <h3>Memory Match</h3>
+                    <p>Test your memory with this fun card matching game.</p>
+                    <a href="https://hakwo65.github.io/Today-News" class="btn" target="_blank">Play Now</a>
+                </div>
+                
+                <div class="game-card">
+                    <div class="game-icon">
+                    <img src="" style="width: 60px; height: 60px;" /></div>
+                    <h3>Snake Game</h3>
+                    <p>The classic Nokia snake game. How long can you grow?</p>
+                    <a href="https://hakwo65.github.io/Today-News" class="btn" target="_blank">Play Now</a>
+                </div>
+                
+                <div class="game-card">
+                    <div class="game-icon">
+                    <img src="" style="width: 60px; height: 60px;" /></div>
+                    <h3>Tic Tac Toe</h3>
+                    <p>Play the classic X and O game against the computer.</p>
+                    <a href="https://hakwo65.github.io/Today-News" class="btn" target="_blank">Play Now</a>
+                </div>
+                
+                <div class="game-card">
+                    <div class="game-icon">
+  		    <img src="" style="width: 60px; height: 60px;" /></div>
+                    <h3>2048 Puzzle</h3>
+                    <p>Combine tiles to reach the 2048 tile in this addictive puzzle.</p>
+                    <a href="https://hakwo65.github.io/Today-News" class="btn" target="_blank">Play Now</a>
+                </div>
+                
+                <div class="game-card">
+                    <div class="game-icon">
+  		    <img src="" style="width: 60px; height: 60px;" /></div>
+                    <h3>Minesweeper</h3>
+                    <p>The classic mine finding game. Can you clear the board?</p>
+                    <a href="https://hakwo65.github.io/Today-News" class="btn" target="_blank">Play Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <h2>About Us</h2>
+                <p>Welcome to ProGameHub, your premier destination for high-quality online games. Founded in 2023, our mission is to provide free, accessible, and entertaining games to players around the world.</p>
+                <p>Our team consists of passionate gamers and developers who work tirelessly to bring you the best gaming experience possible. We believe in creating games that are not only fun but also challenge your skills and creativity.</p>
+                <p>All our games are built using modern web technologies, meaning you can play them on any device without downloads or installations. Just click and play!</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="privacy" class="privacy-section">
+        <div class="container">
+            <div class="privacy-content">
+                <h2>Privacy Policy</h2>
+                <p>At ProGameHub, we take your privacy seriously. This Privacy Policy explains how we collect, use, and protect your information when you use our website.</p>
+                
+                <h3>Information We Collect</h3>
+                <p>We may collect non-personal information such as browser type, device information, and game statistics to improve our services. We do not collect personal information unless voluntarily provided.</p>
+                
+                <h3>How We Use Information</h3>
+                <p>Information collected is used to:</p>
+                <ul>
+                    <li>Improve our games and website</li>
+                    <li>Analyze usage patterns</li>
+                    <li>Provide personalized game experiences</li>
+                </ul>
+                
+                <h3>Cookies</h3>
+                <p>We use cookies to enhance your experience. You can disable cookies in your browser settings, but some game features may not work properly.</p>
+                
+                <h3>Third-Party Services</h3>
+                <p>We may use third-party services for analytics and advertising. These services have their own privacy policies.</p>
+                
+                <h3>Changes to This Policy</h3>
+                <p>We may update this policy periodically. Continued use of our site constitutes acceptance of these changes.</p>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <ul class="footer-links">
+                <li><a href="#games">Games</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#privacy">Privacy</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <p>&copy; 2023 ProGameHub. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Game Modals -->
+    <div id="gameModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeGame()">&times;</span>
+            <div class="game-container" id="gameFrame">
+                <!-- Game will be loaded here -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Game opening/closing functionality
+        function openGame(game) {
+            const modal = document.getElementById('gameModal');
+            const gameFrame = document.getElementById('gameFrame');
+            
+            // Clear previous game
+            gameFrame.innerHTML = '<h2>Loading Game...</h2>';
+            
+            // Show modal
+            modal.style.display = 'block';
+            
+            // Load the selected game
+            setTimeout(() => {
+                switch(game) {
+                    case 'space':
+                        gameFrame.innerHTML = `
+                            <h2>Space Invaders</h2>
+                            <p>Use arrow keys to move and space to shoot. Coming soon!</p>
+                            <canvas id="spaceCanvas" width="600" height="400" style="background:black;"></canvas>
+                            <script>
+                                // Space Invaders game logic would go here
+                                const canvas = document.getElementById('spaceCanvas');
+                                const ctx = canvas.getContext('2d');
+                                
+                                // Game code would be implemented here
+                                ctx.fillStyle = 'white';
+                                ctx.font = '30px Arial';
+                                ctx.fillText('Space Invaders - Coming Soon!', 50, 200);
+                            <\/script>
+                        `;
+                        break;
+                    case 'memory':
+                        gameFrame.innerHTML = `
+                            <h2>Memory Match</h2>
+                            <p>Find all matching pairs. Coming soon!</p>
+                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%;">
+                                ${Array(8).fill().map((_, i) => 
+                                    `<div style="background: #3498db; height: 100px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white; cursor: pointer;">
+                                        ?
+                                    </div>`
+                                ).join('')}
+                            </div>
+                        `;
+                        break;
+                    case 'snake':
+                        gameFrame.innerHTML = `
+                            <h2>Snake Game</h2>
+                            <p>Use arrow keys to control the snake. Coming soon!</p>
+                            <canvas id="snakeCanvas" width="400" height="400" style="background:black;"></canvas>
+                            <script>
+                                // Snake game logic would go here
+                                const canvas = document.getElementById('snakeCanvas');
+                                const ctx = canvas.getContext('2d');
+                                
+                                // Game code would be implemented here
+                                ctx.fillStyle = 'white';
+                                ctx.font = '30px Arial';
+                                ctx.fillText('Snake Game - Coming Soon!', 20, 200);
+                            <\/script>
+                        `;
+                        break;
+                    case 'tictactoe':
+                        gameFrame.innerHTML = `
+                            <h2>Tic Tac Toe</h2>
+                            <p>Click on a square to make your move. Coming soon!</p>
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; width: 300px; margin: 0 auto;">
+                                ${Array(9).fill().map(() => 
+                                    `<div style="background: #f1c40f; height: 100px; display: flex; align-items: center; justify-content: center; font-size: 2rem; cursor: pointer;"></div>`
+                                ).join('')}
+                            </div>
+                        `;
+                        break;
+                    case 'puzzle':
+                        gameFrame.innerHTML = `
+                            <h2>2048 Puzzle</h2>
+                            <p>Use arrow keys to combine tiles. Coming soon!</p>
+                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 400px; margin: 0 auto;">
+                                ${Array(16).fill().map(() => 
+                                    `<div style="background: #bdc3c7; height: 90px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;"></div>`
+                                ).join('')}
+                            </div>
+                        `;
+                        break;
+                    case 'minesweeper':
+                        gameFrame.innerHTML = `
+                            <h2>Minesweeper</h2>
+                            <p>Click to reveal squares, avoid mines. Coming soon!</p>
+                            <div style="display: grid; grid-template-columns: repeat(10, 1fr); gap: 2px; width: 100%;">
+                                ${Array(100).fill().map(() => 
+                                    `<div style="background: #95a5a6; height: 30px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; cursor: pointer;"></div>`
+                                ).join('')}
+                            </div>
+                        `;
+                        break;
+                    default:
+                        gameFrame.innerHTML = '<h2>Game not found</h2>';
+                }
+            }, 500);
+        }
+        
+        function closeGame() {
+            document.getElementById('gameModal').style.display = 'none';
+            document.getElementById('gameFrame').innerHTML = '';
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('gameModal');
+            if (event.target == modal) {
+                closeGame();
+            }
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
