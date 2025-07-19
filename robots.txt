@@ -5,3 +5,4 @@ Disallow:/feed
 Disallow:/comments
 Sitemap:https://onlinegames.github.io/-/sitemap.xml
 Sitemap:https://www.onliinegames.github.io/-/sitemap.xml
+Sitemap:https://onliinegames.github.io/-//atom.xml?redirect=false&start-index=1&max-results=500
